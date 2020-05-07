@@ -44,6 +44,7 @@ class LoremPicsumServiceTests: XCTestCase {
             XCTAssertEqual(pic?.width, 5616)
             XCTAssertEqual(pic?.height, 3744)
             XCTAssertEqual(pic?.downloadUrl, URL(string: "https://picsum.photos/id/0/5616/3744")!)
+            XCTAssertEqual(pic?.author, "Alejandro Escamilla")
 
             XCTAssertEqual(pic?.thumbnailUrl(size: 200), URL(string: "https://picsum.photos/id/0/200")!)
 

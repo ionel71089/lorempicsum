@@ -26,6 +26,7 @@ class LoremPicsumService {
         let width: Int
         let height: Int
         let downloadUrl: URL
+        let author: String
 
         func thumbnailUrl(size: Int) -> URL {
             var urlComponents = URLComponents()
