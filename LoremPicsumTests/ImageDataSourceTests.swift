@@ -22,37 +22,135 @@ class ImageDataSourceTests: XCTestCase {
     }
 
     func testEmptyLoadsNextPage() {
-        let service = MockService()
-        let repo = MockRepository(count: 0)
+        let service = MockService(pics: pics)
+        let repo = ImageRepository(container: mockPersistantContainer)
         let sut = ImageDataSource(service: service,
                                   repository: repo)
+
+        let xp = expectation(description: "wait a bit")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            xp.fulfill()
+        }
+
+        wait(for: [xp], timeout: 3.0)
+
+        XCTAssertEqual(service.requestedPage, 1)
+        XCTAssertEqual(repo.count, 10)
+        XCTAssertEqual(repo.fetchAll().map { $0.order }, Array(0..<10))
+        XCTAssertEqual(sut.nextPage, 2)
+    }
+
+    func loadAllPics(into repo: ImageRepository, count: Int = 10) {
+        pics[0..<count].enumerated().forEach { (order, pic) in
+            _ = repo.insert(pic: pic, order: order)
+        }
+        repo.save()
+    }
+
+    func testExistingDataDoesntLoadsNextPage() {
+        let service = MockService(pics: [])
+        let repo = ImageRepository(container: mockPersistantContainer)
+        loadAllPics(into: repo)
+
+        let sut = ImageDataSource(service: service,
+                                  repository: repo)
+
+        let xp = expectation(description: "wait a bit")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            xp.fulfill()
+        }
+
+        wait(for: [xp], timeout: 3.0)
+
+        XCTAssertNil(service.requestedPage)
+        XCTAssertEqual(sut.nextPage, 2)
+    }
+
+    func testLoadingNextPage() {
+        let service = MockService(pics: pics.suffix(5), perPage: 5)
+        let repo = ImageRepository(container: mockPersistantContainer)
+        loadAllPics(into: repo, count: 5)
+
+        let sut = ImageDataSource(service: service,
+                                  repository: repo)
+
+        sut.didViewItem(at: 3)
+
+        let xp = expectation(description: "wait a bit")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            xp.fulfill()
+        }
+
+        wait(for: [xp], timeout: 3.0)
+
+        XCTAssertEqual(service.requestedPage, 2)
+        XCTAssertEqual(sut.nextPage, 3)
+    }
+
+    func testLoadingLastPage() {
+        let service = MockService(pics: [], perPage: 5)
+        let repo = ImageRepository(container: mockPersistantContainer)
+        loadAllPics(into: repo)
+
+        let sut = ImageDataSource(service: service,
+                                  repository: repo)
+
+        sut.didViewItem(at: 7)
+
+        let xp = expectation(description: "wait a bit")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            xp.fulfill()
+        }
+
+        wait(for: [xp], timeout: 3.0)
+
+        XCTAssertEqual(service.requestedPage, 3)
+        XCTAssertEqual(sut.nextPage, 3)
+    }
+
+    func test_only_one_page_loading_at_a_time() {
+        let service = MockService(pics: [], perPage: 5)
+        let repo = ImageRepository(container: mockPersistantContainer)
+        loadAllPics(into: repo)
+
+        let sut = ImageDataSource(service: service,
+                                  repository: repo)
+
+        sut.didViewItem(at: 7)
+        sut.didViewItem(at: 7)
+
+        let xp = expectation(description: "wait a bit")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            xp.fulfill()
+        }
+
+        wait(for: [xp], timeout: 3.0)
+
+        XCTAssertEqual(service.timesRequested, 1)
     }
 }
 
 class MockService: LoremPicsumServiceProtocol {
-    var itemsPerPage: Int = 10
+    var itemsPerPage: Int
+    var pics: [Pic]
+    var timesRequested = 0
+
+    init(pics: [Pic], perPage: Int = 10) {
+        self.pics = pics
+        self.itemsPerPage = perPage
+    }
 
     var requestedPage: Int?
 
     func getPage(_ page: Int) -> Future<[Pic]> {
-    }
-}
-
-class MockRepository: ImageRepositoryProtocol {
-    private(set) var count: Int
-
-    init(count: Int) {
-        self.count = count
-    }
-
-    func insert(pic: Pic, order: Int) -> Image? {
-        return nil
-    }
-
-    func fetchAll() -> [Image] {
-        return []
-    }
-
-    func save() {
+        requestedPage = page
+        timesRequested += 1
+        defer { pics = Array(pics.dropFirst(itemsPerPage)) }
+        return Future(resolved: Array(pics.prefix(itemsPerPage)))
     }
 }

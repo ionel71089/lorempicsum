@@ -19,7 +19,7 @@ protocol ImageRepositoryProtocol {
     var count: Int { get }
 }
 
-class ImageRepository {
+class ImageRepository: ImageRepositoryProtocol {
     let persistentContainer: NSPersistentContainer!
 
     init(container: NSPersistentContainer) {
@@ -48,6 +48,7 @@ class ImageRepository {
 
     func fetchAll() -> [Image] {
         let request: NSFetchRequest<Image> = Image.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "order", ascending: true)]
         let results = try? persistentContainer.viewContext.fetch(request)
         return results ?? [Image]()
     }
