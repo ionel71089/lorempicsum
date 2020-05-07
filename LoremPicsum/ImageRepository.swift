@@ -11,6 +11,14 @@ import Foundation
 
 typealias Pic = LoremPicsumService.Pic
 
+protocol ImageRepositoryProtocol {
+    func insert(pic: Pic, order: Int) -> Image?
+    func fetchAll() -> [Image]
+    func save()
+
+    var count: Int { get }
+}
+
 class ImageRepository {
     let persistentContainer: NSPersistentContainer!
 
@@ -42,6 +50,11 @@ class ImageRepository {
         let request: NSFetchRequest<Image> = Image.fetchRequest()
         let results = try? persistentContainer.viewContext.fetch(request)
         return results ?? [Image]()
+    }
+
+    var count: Int {
+        let request: NSFetchRequest<Image> = Image.fetchRequest()
+        return (try? persistentContainer.viewContext.count(for: request)) ?? 0
     }
 
     func save() {

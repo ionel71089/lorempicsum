@@ -12,7 +12,12 @@ protocol NetworkDelegate {
     func getJsonData(url: URL) -> Future<Data>
 }
 
-class LoremPicsumService {
+protocol LoremPicsumServiceProtocol {
+    var itemsPerPage: Int { get }
+    func getPage(_ page: Int) -> Future<[Pic]>
+}
+
+class LoremPicsumService: LoremPicsumServiceProtocol {
     var network: NetworkDelegate
     let itemsPerPage: Int
 

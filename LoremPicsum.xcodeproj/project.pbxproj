@@ -33,6 +33,7 @@
 		BF3F46EF246497E600EBBEBF /* LoremPicsum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46B024646E2600EBBEBF /* LoremPicsum.xcdatamodeld */; };
 		BF3F46F324649D4600EBBEBF /* ImageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46F224649D4600EBBEBF /* ImageDataSource.swift */; };
 		BF3F46F524649D7300EBBEBF /* Mocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46F424649D7300EBBEBF /* Mocking.swift */; };
+		BF3F46F724649ECC00EBBEBF /* ImageDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46F624649ECC00EBBEBF /* ImageDataSourceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		BF3F46ED246491D300EBBEBF /* ImageRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryTests.swift; sourceTree = "<group>"; };
 		BF3F46F224649D4600EBBEBF /* ImageDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataSource.swift; sourceTree = "<group>"; };
 		BF3F46F424649D7300EBBEBF /* Mocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocking.swift; sourceTree = "<group>"; };
+		BF3F46F624649ECC00EBBEBF /* ImageDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataSourceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 				BF3F46E924647E4000EBBEBF /* BundleExtensions.swift */,
 				BF3F46F424649D7300EBBEBF /* Mocking.swift */,
 				BF3F46ED246491D300EBBEBF /* ImageRepositoryTests.swift */,
+				BF3F46F624649ECC00EBBEBF /* ImageDataSourceTests.swift */,
 			);
 			path = LoremPicsumTests;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 			files = (
 				BF3F46EF246497E600EBBEBF /* LoremPicsum.xcdatamodeld in Sources */,
 				BF3F46F524649D7300EBBEBF /* Mocking.swift in Sources */,
+				BF3F46F724649ECC00EBBEBF /* ImageDataSourceTests.swift in Sources */,
 				BF3F46EE246491D300EBBEBF /* ImageRepositoryTests.swift in Sources */,
 				BF3F46CF2464705900EBBEBF /* LoremPicsumServiceTests.swift in Sources */,
 				BF3F46EA24647E4000EBBEBF /* BundleExtensions.swift in Sources */,

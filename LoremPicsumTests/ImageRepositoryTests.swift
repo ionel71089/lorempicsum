@@ -43,5 +43,6 @@ class ImageRepositoryTests: XCTestCase {
         sut.save()
 
         XCTAssertEqual(sut.fetchAll().count, pics.count)
+        XCTAssertEqual(sut.count, pics.count)
     }
 }
