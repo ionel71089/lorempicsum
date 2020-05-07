@@ -88,6 +88,7 @@ class ImageDataSourceTests: XCTestCase {
 
         XCTAssertEqual(service.requestedPage, 2)
         XCTAssertEqual(sut.nextPage, 3)
+        XCTAssertEqual(repo.fetchAll().map { $0.order }, Array(0..<10))
     }
 
     func testLoadingLastPage() {

@@ -57,8 +57,9 @@ class ImageDataSource {
     }
 
     private func savePics(pics: [Pic]) -> [Image] {
+        let count = repository.count
         let images = pics.enumerated().map { order, pic in
-            repository.insert(pic: pic, order: order)
+            repository.insert(pic: pic, order: count + order)
         }
 
         repository.save()

@@ -14,6 +14,7 @@ typealias Pic = LoremPicsumService.Pic
 protocol ImageRepositoryProtocol {
     func insert(pic: Pic, order: Int) -> Image?
     func fetchAll() -> [Image]
+    func makeFetchResultsController() -> NSFetchedResultsController<Image>
     func save()
 
     var count: Int { get }
@@ -46,11 +47,22 @@ class ImageRepository: ImageRepositoryProtocol {
         return image
     }
 
-    func fetchAll() -> [Image] {
+    private var request: NSFetchRequest<Image> {
         let request: NSFetchRequest<Image> = Image.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "order", ascending: true)]
+        return request
+    }
+
+    func fetchAll() -> [Image] {
         let results = try? persistentContainer.viewContext.fetch(request)
         return results ?? [Image]()
+    }
+
+    func makeFetchResultsController() -> NSFetchedResultsController<Image> {
+        NSFetchedResultsController(fetchRequest: request,
+                                   managedObjectContext: persistentContainer.viewContext,
+                                   sectionNameKeyPath: nil,
+                                   cacheName: nil)
     }
 
     var count: Int {
