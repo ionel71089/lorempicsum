@@ -37,6 +37,9 @@
 		BF3F46FC2464C99B00EBBEBF /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46FB2464C99B00EBBEBF /* ImageTableViewCell.swift */; };
 		BF3F46FE2464CA3900EBBEBF /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46FD2464CA3900EBBEBF /* App.swift */; };
 		BF3F47002464CAC900EBBEBF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46FF2464CAC900EBBEBF /* Network.swift */; };
+		BF73443D2465480A000CFC66 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73443C2465480A000CFC66 /* ImageCache.swift */; };
+		BFB1623624657A9900AC6C70 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1623524657A9900AC6C70 /* ImageLoader.swift */; };
+		BFE2A2CB24657D5800A47F9C /* Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE2A2CA24657D5800A47F9C /* Blur.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +86,9 @@
 		BF3F46FB2464C99B00EBBEBF /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		BF3F46FD2464CA3900EBBEBF /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		BF3F46FF2464CAC900EBBEBF /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		BF73443C2465480A000CFC66 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		BFB1623524657A9900AC6C70 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		BFE2A2CA24657D5800A47F9C /* Blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blur.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,15 +132,15 @@
 			children = (
 				BF3F46D2246475D900EBBEBF /* Future */,
 				BF3F46F82464C71600EBBEBF /* Model */,
+				BFB1623724657ADA00AC6C70 /* View */,
 				BF3F46A724646E2600EBBEBF /* AppDelegate.swift */,
 				BF3F46A924646E2600EBBEBF /* SceneDelegate.swift */,
-				BF3F46F92464C77500EBBEBF /* ImageListViewController.swift */,
-				BF3F46FB2464C99B00EBBEBF /* ImageTableViewCell.swift */,
 				BF3F46AD24646E2600EBBEBF /* Main.storyboard */,
 				BF3F46B324646E2900EBBEBF /* Assets.xcassets */,
 				BF3F46B524646E2900EBBEBF /* LaunchScreen.storyboard */,
 				BF3F46B824646E2900EBBEBF /* Info.plist */,
 				BF3F46B024646E2600EBBEBF /* LoremPicsum.xcdatamodeld */,
+				BFE2A2CA24657D5800A47F9C /* Blur.swift */,
 			);
 			path = LoremPicsum;
 			sourceTree = "<group>";
@@ -178,8 +184,19 @@
 				BF3F46EB2464912700EBBEBF /* ImageRepository.swift */,
 				BF3F46F224649D4600EBBEBF /* ImageDataSource.swift */,
 				BF3F46FF2464CAC900EBBEBF /* Network.swift */,
+				BF73443C2465480A000CFC66 /* ImageCache.swift */,
+				BFB1623524657A9900AC6C70 /* ImageLoader.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		BFB1623724657ADA00AC6C70 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BF3F46F92464C77500EBBEBF /* ImageListViewController.swift */,
+				BF3F46FB2464C99B00EBBEBF /* ImageTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,10 +314,13 @@
 				BF3F46E52464761100EBBEBF /* Observer.swift in Sources */,
 				BF3F47002464CAC900EBBEBF /* Network.swift in Sources */,
 				BF3F46DE2464761100EBBEBF /* Future+FirstResolved.swift in Sources */,
+				BF73443D2465480A000CFC66 /* ImageCache.swift in Sources */,
 				BF3F46E62464761100EBBEBF /* CancellationToken.swift in Sources */,
 				BF3F46E02464761100EBBEBF /* Context.swift in Sources */,
 				BF3F46E22464761100EBBEBF /* Future.swift in Sources */,
+				BFB1623624657A9900AC6C70 /* ImageLoader.swift in Sources */,
 				BF3F46A824646E2600EBBEBF /* AppDelegate.swift in Sources */,
+				BFE2A2CB24657D5800A47F9C /* Blur.swift in Sources */,
 				BF3F46F324649D4600EBBEBF /* ImageDataSource.swift in Sources */,
 				BF3F46AA24646E2600EBBEBF /* SceneDelegate.swift in Sources */,
 				BF3F46E42464761100EBBEBF /* Future+Delay.swift in Sources */,

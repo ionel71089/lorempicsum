@@ -15,10 +15,13 @@ class ImageListViewController: UITableViewController, NSFetchedResultsController
     private var diffableDataSource: UITableViewDiffableDataSource<Int, Image>!
     private var snapshot = NSDiffableDataSourceSnapshot<Int, Image>()
 
+    private var imageLoader: ImageLoader!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         imagePageLoader = App.shared.imagePageLoader
+        imageLoader = App.shared.imageLoader
         fetchController = imagePageLoader.repository.makeFetchResultsController()
         fetchController.delegate = self
 
@@ -38,10 +41,20 @@ class ImageListViewController: UITableViewController, NSFetchedResultsController
                 let cell = tableView
                     .dequeueReusableCell(withIdentifier: "ImageTableViewCell", for: indexPath) as! ImageTableViewCell
 
-                let viewModel = ImageCellViewModel(author: image.author!) { [weak self] in
+                let (img, future, _) = self.imageLoader.getThumbnail(forModel: image)
+
+                let viewModel = ImageCellViewModel(id: image.id!, author: image.author!, image: img) { [weak self] in
                     self?.imagePageLoader.didViewItem(at: Int(image.order))
                 }
                 cell.configure(with: viewModel)
+
+                future?.onSuccess(callback: { image in
+                    if cell.viewModel?.id == viewModel.id {
+                        cell.photoView.image = image
+                    } else {
+                        print("wat")
+                    }
+                })
 
                 return cell
             }

@@ -15,10 +15,14 @@ class App {
     let loremPicsumService: LoremPicsumService
     let imagePageLoader: ImageDataSource
     let imageRepository: ImageRepository
+    let imageLoader: ImageLoader
 
     init(container: NSPersistentContainer) {
         imageRepository = ImageRepository(container: container)
         loremPicsumService = LoremPicsumService(network: network, itemsPerPage: 10)
         imagePageLoader = ImageDataSource(service: loremPicsumService, repository: imageRepository)
+        imageLoader = ImageLoader(network: network)
+
+        imageLoader.thumbnailStorage = imageRepository
     }
 }

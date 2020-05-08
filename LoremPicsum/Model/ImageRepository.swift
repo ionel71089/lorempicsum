@@ -20,7 +20,11 @@ protocol ImageRepositoryProtocol {
     var count: Int { get }
 }
 
-class ImageRepository: ImageRepositoryProtocol {
+protocol ThumbnailStorage: class {
+    func addThumbnail(data: Data, forModelWithId objectId: NSManagedObjectID)
+}
+
+class ImageRepository: ImageRepositoryProtocol, ThumbnailStorage  {
     let persistentContainer: NSPersistentContainer!
 
     init(container: NSPersistentContainer) {
@@ -55,7 +59,7 @@ class ImageRepository: ImageRepositoryProtocol {
 
     func fetchAll() -> [Image] {
         let results = try? persistentContainer.viewContext.fetch(request)
-        return results ?? [Image]()
+        return results ?? []
     }
 
     func makeFetchResultsController() -> NSFetchedResultsController<Image> {
@@ -71,12 +75,22 @@ class ImageRepository: ImageRepositoryProtocol {
     }
 
     func save() {
+        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         if backgroundContext.hasChanges {
             do {
                 try backgroundContext.save()
             } catch {
                 print("Save error \(error)")
             }
+        }
+    }
+
+    func addThumbnail(data: Data, forModelWithId objectId: NSManagedObjectID) {
+        let context = self.persistentContainer.newBackgroundContext()
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        if let image = try? context.existingObject(with: objectId) as? Image {
+            image.thumbnail = data
+            try? context.save()
         }
     }
 }

@@ -9,24 +9,31 @@
 import UIKit
 
 struct ImageCellViewModel {
+    let id: String
     let author: String
-    let onCellWillDisplay: () -> ()
+    let image: UIImage?
+    let onCellWillDisplay: () -> Void
 }
 
 class ImageTableViewCell: UITableViewCell {
     @IBOutlet var authorLabel: UILabel!
-    private var onCellWillDisplay: (() -> ())?
+    @IBOutlet var photoView: UIImageView!
+
+    var viewModel: ImageCellViewModel?
 
     func configure(with viewModel: ImageCellViewModel) {
         authorLabel.text = viewModel.author
-        onCellWillDisplay = viewModel.onCellWillDisplay
+        photoView.image = viewModel.image
+        self.viewModel = viewModel
     }
 
     func willDisplay() {
-        onCellWillDisplay?()
+        viewModel?.onCellWillDisplay()
     }
 
     override func prepareForReuse() {
-        onCellWillDisplay = nil
+        authorLabel.text = nil
+        photoView.image = nil
+        viewModel = nil
     }
 }

@@ -47,6 +47,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="authorLabel" destination="ibl-C0-Tbg" id="1dF-iX-hxZ"/>
+                                    <outlet property="photoView" destination="t3o-Fv-KJp" id="r3N-3C-HPX"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

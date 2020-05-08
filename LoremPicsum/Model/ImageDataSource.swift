@@ -37,7 +37,7 @@ class ImageDataSource {
 
         future = service
             .getPage(nextPage)
-            .map(savePics)
+            .flatMap(savePics)
             .onSuccess { images in
                 if images.count == self.service.itemsPerPage {
                     self.nextPage += 1
@@ -56,14 +56,17 @@ class ImageDataSource {
         }
     }
 
-    private func savePics(pics: [Pic]) -> [Image] {
+    private func savePics(pics: [Pic]) -> Future<[Image]> {
         let count = repository.count
-        let images = pics.enumerated().map { order, pic in
-            repository.insert(pic: pic, order: count + order)
+
+        return Future(in: .userInteractive) { completion, _ in
+            let images = pics.enumerated().map { order, pic in
+                self.repository.insert(pic: pic, order: count + order)
+            }
+
+            self.repository.save()
+
+            completion(.success(images.compactMap { $0 }))
         }
-
-        repository.save()
-
-        return images.compactMap { $0 }
     }
 }
