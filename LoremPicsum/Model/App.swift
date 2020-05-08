@@ -15,14 +15,21 @@ class App {
     let loremPicsumService: LoremPicsumService
     let imagePageLoader: ImageDataSource
     let imageRepository: ImageRepository
-    let imageLoader: ImageLoader
+    let thumbnailDownloader: ThumbnailDownloader
+    var fullImageCache = ImageCache()
+    let fullImageDownloader: FullImageDownloader
 
     init(container: NSPersistentContainer) {
         imageRepository = ImageRepository(container: container)
         loremPicsumService = LoremPicsumService(network: network, itemsPerPage: 10)
         imagePageLoader = ImageDataSource(service: loremPicsumService, repository: imageRepository)
-        imageLoader = ImageLoader(network: network)
+        thumbnailDownloader = ThumbnailDownloader(network: network)
 
-        imageLoader.thumbnailStorage = imageRepository
+        thumbnailDownloader.thumbnailStorage = imageRepository
+        fullImageDownloader = FullImageDownloader(cache: fullImageCache)
+    }
+
+    func detailsViewController(for image: Image, withCoder coder: NSCoder) -> DetailViewController? {
+        return DetailViewController(coder: coder, image: image, downloader: fullImageDownloader)
     }
 }

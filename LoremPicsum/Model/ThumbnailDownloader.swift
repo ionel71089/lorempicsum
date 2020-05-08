@@ -1,5 +1,5 @@
 //
-//  ImageLoader.swift
+//  ThumbnailDownloader.swift
 //  LoremPicsum
 //
 //  Created by Ionel Lescai on 08/05/2020.
@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ImageLoader {
+class ThumbnailDownloader {
     let cache = ImageCache()
     let network: NetworkDelegate
     var futures = [String: Future<UIImage>]()

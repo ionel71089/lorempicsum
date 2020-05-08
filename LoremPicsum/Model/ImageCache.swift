@@ -11,6 +11,10 @@ import UIKit
 class ImageCache {
     private var cache = NSCache<NSString, UIImage>()
 
+    init() {
+        cache.countLimit = 100
+    }
+
     subscript(id: String) -> UIImage? {
         get {
             cache.object(forKey: NSString(string: id))

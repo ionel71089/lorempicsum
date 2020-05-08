@@ -14,13 +14,14 @@ class ImageListViewController: UITableViewController, NSFetchedResultsController
     private var fetchController: NSFetchedResultsController<Image>!
     private var diffableDataSource: UITableViewDiffableDataSource<Int, Image>!
 
-    private var imageLoader: ImageLoader!
+    private var imageLoader: ThumbnailDownloader!
+    private var selectedImage: Image!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         imagePageLoader = App.shared.imagePageLoader
-        imageLoader = App.shared.imageLoader
+        imageLoader = App.shared.thumbnailDownloader
         fetchController = imagePageLoader.repository.makeFetchResultsController()
         fetchController.delegate = self
 
@@ -74,5 +75,19 @@ class ImageListViewController: UITableViewController, NSFetchedResultsController
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         updateSnapshot(animated: true)
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let image = diffableDataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+
+        selectedImage = image
+        performSegue(withIdentifier: "showDetail", sender: self)
+    }
+
+    @IBSegueAction func showDetail(_ coder: NSCoder) -> DetailViewController? {
+        App.shared.detailsViewController(for: selectedImage,
+                                         withCoder: coder)
     }
 }
