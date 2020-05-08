@@ -19,7 +19,7 @@ class ImageLoader {
         self.network = network
     }
 
-    func getThumbnail(forModel model: Image) -> (UIImage?, Future<UIImage>?, CancellationToken) {
+    func getThumbnail(forModel model: Image) -> (UIImage?, Future<UIImage>?) {
         let id = model.id!
         let objectId = model.objectID
         var image = cache[id]
@@ -30,7 +30,6 @@ class ImageLoader {
         }
 
         var future: Future<UIImage>?
-        let token = CancellationToken()
         let url = model.thumbnailUrl!
 
         if image == nil {
@@ -45,7 +44,7 @@ class ImageLoader {
             futures[id] = future
         }
 
-        return (image, future, token)
+        return (image, future)
     }
 
     func downloadImage(url: URL, objectId: NSManagedObjectID) -> Future<UIImage> {

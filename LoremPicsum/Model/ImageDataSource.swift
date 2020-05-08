@@ -33,13 +33,13 @@ class ImageDataSource {
     }
 
     private func loadNextPage() {
-        guard future == nil else { return }
+        guard future == nil, !lastPage else { return }
 
         future = service
             .getPage(nextPage)
             .flatMap(savePics)
             .onSuccess { images in
-                if images.count == self.service.itemsPerPage {
+                if images.count > 0 {
                     self.nextPage += 1
                     self.nextIndex += images.count
                 } else {

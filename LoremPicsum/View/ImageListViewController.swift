@@ -13,7 +13,6 @@ class ImageListViewController: UITableViewController, NSFetchedResultsController
     private var imagePageLoader: ImageDataSource!
     private var fetchController: NSFetchedResultsController<Image>!
     private var diffableDataSource: UITableViewDiffableDataSource<Int, Image>!
-    private var snapshot = NSDiffableDataSourceSnapshot<Int, Image>()
 
     private var imageLoader: ImageLoader!
 
@@ -41,23 +40,25 @@ class ImageListViewController: UITableViewController, NSFetchedResultsController
                 let cell = tableView
                     .dequeueReusableCell(withIdentifier: "ImageTableViewCell", for: indexPath) as! ImageTableViewCell
 
-                let (img, future, _) = self.imageLoader.getThumbnail(forModel: image)
-
-                let viewModel = ImageCellViewModel(id: image.id!, author: image.author!, image: img) { [weak self] in
-                    self?.imagePageLoader.didViewItem(at: Int(image.order))
-                }
-                cell.configure(with: viewModel)
-
-                future?.onSuccess(callback: { image in
-                    if cell.viewModel?.id == viewModel.id {
-                        cell.photoView.image = image
-                    } else {
-                        print("wat")
-                    }
-                })
+                self.configure(cell: cell, image: image)
 
                 return cell
             }
+    }
+
+    private func configure(cell: ImageTableViewCell, image: Image) {
+        let (img, future) = imageLoader.getThumbnail(forModel: image)
+
+        let viewModel = ImageCellViewModel(id: image.id!, author: image.author!, image: img) { [weak self] in
+            self?.imagePageLoader.didViewItem(at: Int(image.order))
+        }
+        cell.configure(with: viewModel)
+
+        future?.onSuccess { image in
+            if cell.viewModel?.id == viewModel.id {
+                cell.photoView.image = image
+            }
+        }
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

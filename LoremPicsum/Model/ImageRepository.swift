@@ -24,7 +24,7 @@ protocol ThumbnailStorage: class {
     func addThumbnail(data: Data, forModelWithId objectId: NSManagedObjectID)
 }
 
-class ImageRepository: ImageRepositoryProtocol, ThumbnailStorage  {
+class ImageRepository: ImageRepositoryProtocol, ThumbnailStorage {
     let persistentContainer: NSPersistentContainer!
 
     init(container: NSPersistentContainer) {
@@ -86,11 +86,15 @@ class ImageRepository: ImageRepositoryProtocol, ThumbnailStorage  {
     }
 
     func addThumbnail(data: Data, forModelWithId objectId: NSManagedObjectID) {
-        let context = self.persistentContainer.newBackgroundContext()
+        let context = persistentContainer.newBackgroundContext()
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         if let image = try? context.existingObject(with: objectId) as? Image {
             image.thumbnail = data
-            try? context.save()
+            do {
+                try context.save()
+            } catch {
+                print("Save error \(error)")
+            }
         }
     }
 }
