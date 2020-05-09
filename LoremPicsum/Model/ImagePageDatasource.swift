@@ -16,6 +16,8 @@ class ImagePageDatasource {
     private var nextIndex: Int
     private var lastPage = false
 
+    var onPageLoaded: (() -> Void)?
+
     private var future: Future<[Image]>?
 
     init(service: LoremPicsumServiceProtocol,
@@ -47,6 +49,7 @@ class ImagePageDatasource {
                 }
             }.onResult { _ in
                 self.future = nil
+                self.onPageLoaded?()
             }
     }
 

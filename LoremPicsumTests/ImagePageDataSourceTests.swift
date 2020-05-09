@@ -27,13 +27,12 @@ class ImagePageDataSourceTests: XCTestCase {
         let sut = ImagePageDatasource(service: service,
                                       repository: repo)
 
-        let xp = expectation(description: "wait a bit")
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        let xp = expectation(description: "wait for page to load")
+        sut.onPageLoaded = {
             xp.fulfill()
         }
 
-        wait(for: [xp], timeout: 3.0)
+        wait(for: [xp], timeout: 1)
 
         XCTAssertEqual(service.requestedPage, 1)
         XCTAssertEqual(repo.count, 10)
@@ -56,14 +55,6 @@ class ImagePageDataSourceTests: XCTestCase {
         let sut = ImagePageDatasource(service: service,
                                       repository: repo)
 
-        let xp = expectation(description: "wait a bit")
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            xp.fulfill()
-        }
-
-        wait(for: [xp], timeout: 3.0)
-
         XCTAssertNil(service.requestedPage)
         XCTAssertEqual(sut.nextPage, 2)
     }
@@ -78,13 +69,12 @@ class ImagePageDataSourceTests: XCTestCase {
 
         sut.didViewItem(at: 3)
 
-        let xp = expectation(description: "wait a bit")
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        let xp = expectation(description: "wait for page to load")
+        sut.onPageLoaded = {
             xp.fulfill()
         }
 
-        wait(for: [xp], timeout: 3.0)
+        wait(for: [xp], timeout: 1)
 
         XCTAssertEqual(service.requestedPage, 2)
         XCTAssertEqual(sut.nextPage, 3)
@@ -101,13 +91,12 @@ class ImagePageDataSourceTests: XCTestCase {
 
         sut.didViewItem(at: 7)
 
-        let xp = expectation(description: "wait a bit")
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        let xp = expectation(description: "wait for page to load")
+        sut.onPageLoaded = {
             xp.fulfill()
         }
 
-        wait(for: [xp], timeout: 3.0)
+        wait(for: [xp], timeout: 1)
 
         XCTAssertEqual(service.requestedPage, 3)
         XCTAssertEqual(sut.nextPage, 3)
@@ -124,13 +113,13 @@ class ImagePageDataSourceTests: XCTestCase {
         sut.didViewItem(at: 7)
         sut.didViewItem(at: 7)
 
-        let xp = expectation(description: "wait a bit")
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        let xp = expectation(description: "wait for page to load")
+        sut.onPageLoaded = {
             xp.fulfill()
+            sut.onPageLoaded = nil
         }
 
-        wait(for: [xp], timeout: 3.0)
+        wait(for: [xp], timeout: 1)
 
         XCTAssertEqual(service.timesRequested, 1)
     }
