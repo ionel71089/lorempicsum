@@ -1,5 +1,5 @@
 //
-//  ImageDataSourceTests.swift
+//  ImagePageDataSourceTests.swift
 //  LoremPicsumTests
 //
 //  Created by Ionel Lescai on 07/05/2020.

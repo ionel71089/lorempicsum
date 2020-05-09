@@ -10,7 +10,7 @@ import CoreData
 import UIKit
 
 class ImageListViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    private var imagePageLoader: ImageDataSource!
+    private var imagePageLoader: ImagePageDatasource!
     private var fetchController: NSFetchedResultsController<Image>!
     private var diffableDataSource: UITableViewDiffableDataSource<Int, Image>!
 

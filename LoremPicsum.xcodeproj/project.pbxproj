@@ -30,9 +30,9 @@
 		BF3F46EC2464912700EBBEBF /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46EB2464912700EBBEBF /* ImageRepository.swift */; };
 		BF3F46EE246491D300EBBEBF /* ImageRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46ED246491D300EBBEBF /* ImageRepositoryTests.swift */; };
 		BF3F46EF246497E600EBBEBF /* LoremPicsum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46B024646E2600EBBEBF /* LoremPicsum.xcdatamodeld */; };
-		BF3F46F324649D4600EBBEBF /* ImageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46F224649D4600EBBEBF /* ImageDataSource.swift */; };
+		BF3F46F324649D4600EBBEBF /* ImagePageDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46F224649D4600EBBEBF /* ImagePageDatasource.swift */; };
 		BF3F46F524649D7300EBBEBF /* Mocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46F424649D7300EBBEBF /* Mocking.swift */; };
-		BF3F46F724649ECC00EBBEBF /* ImageDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46F624649ECC00EBBEBF /* ImageDataSourceTests.swift */; };
+		BF3F46F724649ECC00EBBEBF /* ImagePageDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46F624649ECC00EBBEBF /* ImagePageDataSourceTests.swift */; };
 		BF3F46FA2464C77500EBBEBF /* ImageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46F92464C77500EBBEBF /* ImageListViewController.swift */; };
 		BF3F46FC2464C99B00EBBEBF /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46FB2464C99B00EBBEBF /* ImageTableViewCell.swift */; };
 		BF3F46FE2464CA3900EBBEBF /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3F46FD2464CA3900EBBEBF /* App.swift */; };
@@ -81,9 +81,9 @@
 		BF3F46E924647E4000EBBEBF /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
 		BF3F46EB2464912700EBBEBF /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
 		BF3F46ED246491D300EBBEBF /* ImageRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryTests.swift; sourceTree = "<group>"; };
-		BF3F46F224649D4600EBBEBF /* ImageDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataSource.swift; sourceTree = "<group>"; };
+		BF3F46F224649D4600EBBEBF /* ImagePageDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageDatasource.swift; sourceTree = "<group>"; };
 		BF3F46F424649D7300EBBEBF /* Mocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocking.swift; sourceTree = "<group>"; };
-		BF3F46F624649ECC00EBBEBF /* ImageDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataSourceTests.swift; sourceTree = "<group>"; };
+		BF3F46F624649ECC00EBBEBF /* ImagePageDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageDataSourceTests.swift; sourceTree = "<group>"; };
 		BF3F46F92464C77500EBBEBF /* ImageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListViewController.swift; sourceTree = "<group>"; };
 		BF3F46FB2464C99B00EBBEBF /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		BF3F46FD2464CA3900EBBEBF /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -154,11 +154,11 @@
 			children = (
 				BF3F46C324646E2A00EBBEBF /* Info.plist */,
 				BF3F46CE2464705900EBBEBF /* LoremPicsumServiceTests.swift */,
+				BF3F46ED246491D300EBBEBF /* ImageRepositoryTests.swift */,
+				BF3F46F624649ECC00EBBEBF /* ImagePageDataSourceTests.swift */,
 				BF3F46E724647E0600EBBEBF /* firstPage.json */,
 				BF3F46E924647E4000EBBEBF /* BundleExtensions.swift */,
 				BF3F46F424649D7300EBBEBF /* Mocking.swift */,
-				BF3F46ED246491D300EBBEBF /* ImageRepositoryTests.swift */,
-				BF3F46F624649ECC00EBBEBF /* ImageDataSourceTests.swift */,
 			);
 			path = LoremPicsumTests;
 			sourceTree = "<group>";
@@ -186,7 +186,7 @@
 				BF3F46FD2464CA3900EBBEBF /* App.swift */,
 				BF3F46D0246470B900EBBEBF /* LoremPicsumService.swift */,
 				BF3F46EB2464912700EBBEBF /* ImageRepository.swift */,
-				BF3F46F224649D4600EBBEBF /* ImageDataSource.swift */,
+				BF3F46F224649D4600EBBEBF /* ImagePageDatasource.swift */,
 				BF3F46FF2464CAC900EBBEBF /* Network.swift */,
 				BF73443C2465480A000CFC66 /* ImageCache.swift */,
 				BFB1623524657A9900AC6C70 /* ThumbnailDownloader.swift */,
@@ -329,7 +329,7 @@
 				BFB1623624657A9900AC6C70 /* ThumbnailDownloader.swift in Sources */,
 				BF3F46A824646E2600EBBEBF /* AppDelegate.swift in Sources */,
 				BFE2A2CB24657D5800A47F9C /* Blur.swift in Sources */,
-				BF3F46F324649D4600EBBEBF /* ImageDataSource.swift in Sources */,
+				BF3F46F324649D4600EBBEBF /* ImagePageDatasource.swift in Sources */,
 				BF3F46AA24646E2600EBBEBF /* SceneDelegate.swift in Sources */,
 				BF3F46E42464761100EBBEBF /* Future+Delay.swift in Sources */,
 				BF3F46E32464761100EBBEBF /* Promise.swift in Sources */,
@@ -342,7 +342,7 @@
 			files = (
 				BF3F46EF246497E600EBBEBF /* LoremPicsum.xcdatamodeld in Sources */,
 				BF3F46F524649D7300EBBEBF /* Mocking.swift in Sources */,
-				BF3F46F724649ECC00EBBEBF /* ImageDataSourceTests.swift in Sources */,
+				BF3F46F724649ECC00EBBEBF /* ImagePageDataSourceTests.swift in Sources */,
 				BF3F46EE246491D300EBBEBF /* ImageRepositoryTests.swift in Sources */,
 				BF3F46CF2464705900EBBEBF /* LoremPicsumServiceTests.swift in Sources */,
 				BF3F46EA24647E4000EBBEBF /* BundleExtensions.swift in Sources */,

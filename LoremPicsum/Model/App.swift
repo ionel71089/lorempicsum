@@ -13,7 +13,7 @@ class App {
 
     let network = Network()
     let loremPicsumService: LoremPicsumService
-    let imagePageLoader: ImageDataSource
+    let imagePageLoader: ImagePageDatasource
     let imageRepository: ImageRepository
     let thumbnailDownloader: ThumbnailDownloader
     var fullImageCache = ImageCache()
@@ -22,7 +22,7 @@ class App {
     init(container: NSPersistentContainer) {
         imageRepository = ImageRepository(container: container)
         loremPicsumService = LoremPicsumService(network: network, itemsPerPage: 10)
-        imagePageLoader = ImageDataSource(service: loremPicsumService, repository: imageRepository)
+        imagePageLoader = ImagePageDatasource(service: loremPicsumService, repository: imageRepository)
         thumbnailDownloader = ThumbnailDownloader(network: network)
 
         thumbnailDownloader.thumbnailStorage = imageRepository

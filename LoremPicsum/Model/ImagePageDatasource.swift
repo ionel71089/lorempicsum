@@ -1,5 +1,5 @@
 //
-//  ImageDataSource.swift
+//  ImagePageDatasource.swift
 //  LoremPicsum
 //
 //  Created by Ionel Lescai on 07/05/2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ImageDataSource {
+class ImagePageDatasource {
     let service: LoremPicsumServiceProtocol
     let repository: ImageRepositoryProtocol
 
