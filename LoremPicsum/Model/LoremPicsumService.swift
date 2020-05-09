@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol NetworkDelegate {
-    func getJsonData(url: URL) -> Future<Data>
-}
-
 protocol LoremPicsumServiceProtocol {
     var itemsPerPage: Int { get }
     func getPage(_ page: Int) -> Future<[Pic]>
@@ -56,7 +52,7 @@ class LoremPicsumService: LoremPicsumServiceProtocol {
 
     func getPage(_ page: Int) -> Future<[Pic]> {
         network
-            .getJsonData(url: url(forPage: page))
+            .getData(url: url(forPage: page), cancellationToken: nil)
             .flatMap(parse)
     }
 

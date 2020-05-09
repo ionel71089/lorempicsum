@@ -10,9 +10,16 @@ import UIKit
 
 class FullImageDownloader {
     var imageCache: ImageCache
+    var network: NetworkDelegate
+    let token = CancellationToken()
 
-    init(cache: ImageCache) {
+    init(cache: ImageCache, network: NetworkDelegate) {
         imageCache = cache
+        self.network = network
+    }
+
+    func cancel() {
+        token.cancel()
     }
 
     func getImage(url: URL) -> Future<UIImage> {
@@ -53,18 +60,22 @@ class FullImageDownloader {
     }
 
     private func downloadImage(url: URL) -> Future<(Data, UIImage)> {
-        Future(in: .background) { completion, _ in
-            do {
-                let data = try Data(contentsOf: url)
-                if let image = UIImage(data: data) {
-                    completion(.success((data, image)))
-                } else {
-                    throw "Loading image from data failed"
+        network
+            .getData(url: url, cancellationToken: token)
+            .flatMap { data in
+                Future(in: .background) { completion, _ in
+                    do {
+                        let data = try Data(contentsOf: url)
+                        if let image = UIImage(data: data) {
+                            completion(.success((data, image)))
+                        } else {
+                            throw "Loading image from data failed"
+                        }
+                    } catch {
+                        completion(.failure(error))
+                    }
                 }
-            } catch {
-                completion(.failure(error))
             }
-        }
     }
 
     private func filePath(forUrl url: URL) -> URL? {

@@ -17,7 +17,6 @@ class App {
     let imageRepository: ImageRepository
     let thumbnailDownloader: ThumbnailDownloader
     var fullImageCache = ImageCache()
-    let fullImageDownloader: FullImageDownloader
 
     init(container: NSPersistentContainer) {
         imageRepository = ImageRepository(container: container)
@@ -26,7 +25,10 @@ class App {
         thumbnailDownloader = ThumbnailDownloader(network: network)
 
         thumbnailDownloader.thumbnailStorage = imageRepository
-        fullImageDownloader = FullImageDownloader(cache: fullImageCache)
+    }
+
+    var fullImageDownloader: FullImageDownloader {
+        FullImageDownloader(cache: fullImageCache, network: network)
     }
 
     func detailsViewController(for image: Image, withCoder coder: NSCoder) -> DetailViewController? {

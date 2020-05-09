@@ -33,9 +33,14 @@ class DetailViewController: UIViewController, UIScrollViewDelegate {
         self.title = imageModel.author
         imageDownloader
             .getImage(url: imageModel.downloadUrl!)
-            .onSuccess { (image) in
-                self.imageView.image = image
+            .onSuccess { [weak self] (image) in
+                self?.imageView.image = image
         }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        imageDownloader.cancel()
     }
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

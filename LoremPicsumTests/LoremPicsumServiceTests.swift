@@ -76,7 +76,7 @@ class MockNetwork: NetworkDelegate {
         self.future = future
     }
 
-    func getJsonData(url: URL) -> Future<Data> {
+    func getData(url: URL, cancellationToken: CancellationToken?) -> Future<Data> {
         self.calledURL = url
         return future
     }
